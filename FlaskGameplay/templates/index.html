@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image and Video Stream</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #content-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        #image-section,
+        #video-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        #button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Playing Using Computer Vision</h1>
+    
+    <div id="content-container">
+        <!-- Image section -->
+        <div id="image-section">
+            <img src="{{ url_for('static', filename=random_image) }}" alt="Random Image">
+        </div>
+
+        <!-- Video stream section -->
+        <div id="video-section">
+            <img src="{{ url_for('video_feed') }}" alt="Video Stream" width="320" height="240">
+        </div>
+    </div>
+
+    <!-- Button container -->
+    <div id="button-container">
+        <!-- Button to generate a new random image -->
+        <button onclick="location.reload()">Generate Random Image</button>
+    </div>
+</body>
+</html>
