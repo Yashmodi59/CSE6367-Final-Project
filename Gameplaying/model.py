@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.callbacks import TensorBoard
 from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
 import numpy as np
@@ -7,13 +7,16 @@ def create_and_train_lstm_model(X_train, y_train, actions, log_dir='Logs', epoch
     # Create TensorBoard callback
     tb_callback = TensorBoard(log_dir=log_dir)
 
-    # Create Sequential model
+     # Create Sequential model
     model = Sequential()
-    model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30, 126)))
-    model.add(LSTM(128, return_sequences=True, activation='relu'))
-    model.add(LSTM(64, return_sequences=False, activation='relu'))
-    model.add(Dense(64, activation='relu'))
+    model.add(LSTM(32, return_sequences=True, activation='relu', input_shape=(30, 126)))
+    model.add(Dropout(0.5)) 
+    model.add(LSTM(64, return_sequences=True, activation='relu'))
+    model.add(LSTM(32, return_sequences=False, activation='relu'))
+    model.add(Dropout(0.5)) 
+    # model.add(Dense(64, activation='relu'))
     model.add(Dense(32, activation='relu'))
+    model.add(Dropout(0.5))
     model.add(Dense(actions.shape[0], activation='softmax'))
 
     # Compile the model

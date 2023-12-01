@@ -2,7 +2,7 @@ import tensorflow as tf
 import cv2
 import numpy as np
 from utility import prob_viz
-actions = np.array(['Paper', 'Stone', 'Scissor'])
+actions = np.array(['Stone', 'Paper', 'Scissor'])
 model = tf.keras.models.load_model('Project\Gameplaying\models\\actions.h5')
 colors = [(245,117,16), (117,245,16), (16,117,245)]
 
