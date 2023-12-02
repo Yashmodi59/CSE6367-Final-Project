@@ -9,12 +9,9 @@ from utility import prob_viz
 app = Flask(__name__)
 
 # List of image filenames
-image_files = ['paper.jpeg', 'scissor.jpeg', 'stone.jpeg']
-
-actions = np.array(['Paper', 'Stone', 'Scissor'])
-
-model = tf.keras.models.load_model('Gameplaying\models\\actions.h5')
-colors = [(245, 117, 16), (117, 245, 16), (16, 117, 245)]
+actions = np.array(['Hello', 'goodbye', 'Thank you!', 'yes', 'no', 'I love you!'])
+model = tf.keras.models.load_model("ASL\models\ASLmodel.h5")
+colors = [(245,117,16), (117,245,16), (16,117,245),(16,17,215),(116,117,24),(1,0,0)]
 
 mediapipe_handler = MediapipeHandler()
 sequence = []
@@ -74,8 +71,8 @@ def text_feed_route():
 @app.route('/')
 def index():
     # Get a random image filename
-    random_image = random.choice(image_files)
-    return render_template('index.html', random_image=random_image)
+    # random_image = random.choice(image_files)
+    return render_template('index.html')
 
 
 @app.route('/video_feed')
@@ -85,3 +82,4 @@ def video_feed():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

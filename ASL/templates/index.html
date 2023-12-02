@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Image and Video Stream</title>
+    <title>American Sign Language</title>
 
     <style>
         body {
@@ -17,7 +17,7 @@
             justify-content: space-around;
             align-items: center;
             width: 80%;
-            margin-top: 20px;
+            margin-top: 20px; 
         }
 
         #image-section,
@@ -29,29 +29,44 @@
         #button-container {
             margin-top: 20px;
         }
+
+        #text-container {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(13, 138, 160, 0.8);
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #333;
+            font-size: 16px;
+        }
+
+
     </style>
 </head>
 <body>
-    <h1>Game Playing Using Computer Vision</h1>
+    <h1>American Sign Language Detection Using Computer Vision</h1>
     
     <div id="content-container">
         <!-- Image section -->
-        <div id="image-section">
+        <!-- <div id="image-section">
             <img src="{{ url_for('static', filename=random_image) }}" alt="Random Image" width="640" height="480">
-        </div>
+        </div> -->
 
         <!-- Video stream section -->
         <div id="video-section">
             <img src="{{ url_for('video_feed') }}" alt="Video Stream" width="640" height="480">
             <div id="text-container"></div>
-        </div>
+        </div> 
 
     </div>
 
     <!-- Button container -->
     <div id="button-container">
         <!-- Button to generate a new random image -->
-        <button onclick="location.reload()">Generate Random Image</button>
+        <!-- <button onclick="location.reload()">Generate Random Image</button> -->
     </div>
     <script>
         var source = new EventSource("/text_feed");
