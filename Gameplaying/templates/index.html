@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Image and Video Stream</title>
+    <title>Rock Paper Scissors Game</title>
 
     <style>
         body {
@@ -29,11 +30,18 @@
         #button-container {
             margin-top: 20px;
         }
+
+        #result-container {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Game Playing Using Computer Vision</h1>
-    
+    <h1>Rock Paper Scissors Game</h1>
+
     <div id="content-container">
         <!-- Image section -->
         <div id="image-section">
@@ -48,17 +56,28 @@
 
     </div>
 
+    <!-- Result container -->
+    <div id="result-container"></div>
+
     <!-- Button container -->
     <div id="button-container">
         <!-- Button to generate a new random image -->
         <button onclick="location.reload()">Generate Random Image</button>
     </div>
+
     <script>
         var source = new EventSource("/text_feed");
-        source.onmessage = function(event) {
-          document.getElementById("text-container").innerHTML = event.data;
+        source.onmessage = function (event) {
+            document.getElementById("text-container").innerHTML = event.data;
         };
-      </script>
+    
+        var newsource = new EventSource("/scoring");
+        newsource.onmessage = function (event) {
+            var data = event.data.split(': ')[1]; // Extracting the output value from the event data
+            document.getElementById("result-container").innerHTML = data;
+        };
+    </script>
     
 </body>
+
 </html>

@@ -6,6 +6,7 @@ import tensorflow as tf
 import numpy as np
 from flask import Response
 from utility import prob_viz
+
 app = Flask(__name__)
 
 # List of image filenames
@@ -20,12 +21,14 @@ mediapipe_handler = MediapipeHandler()
 sequence = []
 sentence = []
 threshold = 0.8
-
+random_image = None
 cap = cv2.VideoCapture(0)
 
 def gen_frames():
     global sequence  # Declare sequence as a global variable
     global sentence
+    global random_image  # Declare random_image as a global variable
+
     with mediapipe_handler.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
             ret, frame = cap.read()
@@ -67,21 +70,45 @@ def text_feed():
         if len(sentence) > 0:
             yield f"data: {' '.join(sentence)}\n\n"
 
+def output_feed():
+    while cap.isOpened():
+        if len(sentence) > 0:
+            output = ""
+            user_choice = sentence[-1]
+            computer_choice = str(random_image.split('.')[0])
+
+            if user_choice == computer_choice:
+                output = "It's a tie!"
+            elif (
+                (user_choice == 'Stone' and computer_choice == 'Scissor') or
+                (user_choice == 'Paper' and computer_choice == 'Stone') or
+                (user_choice == 'Scissor' and computer_choice == 'Paper')
+            ):
+                output = "You win!"
+            else:
+                output = "Computer wins!"
+
+            yield f"output: {output}\n\n"
+            print(output)
+
 @app.route('/text_feed')
 def text_feed_route():
     return Response(text_feed(), content_type='text/event-stream')
 
+@app.route('/scoring')
+def score_feed_route():
+    return Response(output_feed(), content_type='text/event-stream')
+
 @app.route('/')
 def index():
     # Get a random image filename
+    global random_image
     random_image = random.choice(image_files)
     return render_template('index.html', random_image=random_image)
-
 
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
