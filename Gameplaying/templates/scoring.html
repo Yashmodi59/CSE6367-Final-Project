@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        .result-container {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .choice-container {
+            width: 48%; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Result Page</h1>
+
+    <div class="result-container">
+        <div class="choice-container">
+            <p>USER CHOICE: {{ output }}</p>
+            <img src="{{ user_image }}" alt="User Image">
+        </div>
+        <div class="choice-container">
+            <p>Computer Choice</p>
+            <img src="{{ image_path }}" alt="Result Image">
+        </div>
+    </div>
+    <!-- Add a button to go back to the home page -->
+    <h2>{{score}}</h2>
+    <form action="/">
+        <input type="submit" value="Back to Home">
+    </form>
+
+</body>
+</html>

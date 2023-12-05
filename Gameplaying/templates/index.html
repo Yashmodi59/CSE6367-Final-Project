@@ -1,83 +1,19 @@
+<!-- templates/index.html (HTML code) -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors Game</title>
-
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #content-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 80%;
-            margin-top: 20px;
-        }
-
-        #image-section,
-        #video-section {
-            flex: 1;
-            text-align: center;
-        }
-
-        #button-container {
-            margin-top: 20px;
-        }
-
-        #result-container {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.5em;
-        }
-    </style>
+    <title>Video Feed</title>
 </head>
-
 <body>
-    <h1>Rock Paper Scissors Game</h1>
+    <h1>Video Feed</h1>
+    <button onclick="location.href='/open_video_feed'">Open Video Feed</button>
+    <p>{{ output }}</p>
+    <form action="/result">
+        <input type="submit" value="Go to Result">
+    </form>
 
-    <div id="content-container">
-        <!-- Image section -->
-        <div id="image-section">
-            <img src="{{ url_for('static', filename=random_image) }}" alt="Random Image" width="640" height="480">
-        </div>
-
-        <!-- Video stream section -->
-        <div id="video-section">
-            <img src="{{ url_for('video_feed') }}" alt="Video Stream" width="640" height="480">
-            <div id="text-container"></div>
-        </div>
-
-    </div>
-
-    <!-- Result container -->
-    <div id="result-container"></div>
-
-    <!-- Button container -->
-    <div id="button-container">
-        <!-- Button to generate a new random image -->
-        <button onclick="location.reload()">Generate Random Image</button>
-    </div>
-
-    <script>
-        var source = new EventSource("/text_feed");
-        source.onmessage = function (event) {
-            document.getElementById("text-container").innerHTML = event.data;
-        };
-    
-        var newsource = new EventSource("/scoring");
-        newsource.onmessage = function (event) {
-            var data = event.data.split(': ')[1]; // Extracting the output value from the event data
-            document.getElementById("result-container").innerHTML = data;
-        };
-    </script>
-    
 </body>
-
 </html>
