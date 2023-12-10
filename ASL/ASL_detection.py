@@ -2,8 +2,9 @@ import tensorflow as tf
 import cv2
 import numpy as np
 from utility import prob_viz
+
 actions = np.array(['Hello', 'goodbye', 'Thank you!', 'yes', 'no', 'I love you!'])
-model = tf.keras.models.load_model("Project\ASL\models\ASLmodel.h5")
+model = tf.keras.models.load_model("ASL\models\ASLmodel.h5")
 colors = [(245,117,16), (117,245,16), (16,117,245),(16,17,215),(116,117,24),(1,0,0)]
 
 from utils import MediapipeHandler

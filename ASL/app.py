@@ -7,7 +7,7 @@ import numpy as np
 from flask import Response
 from utility import prob_viz
 app = Flask(__name__)
-
+# import pyttsx3
 # List of image filenames
 actions = np.array(['Hello', 'goodbye', 'Thank you!', 'yes', 'no', 'I love you!'])
 model = tf.keras.models.load_model("ASL\models\ASLmodel.h5")
@@ -17,6 +17,7 @@ mediapipe_handler = MediapipeHandler()
 sequence = []
 sentence = []
 threshold = 0.8
+# engine = pyttsx3.init()
 
 cap = cv2.VideoCapture(0)
 
@@ -42,6 +43,7 @@ def gen_frames():
                     if len(sentence) > 0:
                         if actions[np.argmax(res)] != sentence[-1]:
                             sentence.append(actions[np.argmax(res)])
+
                     else:
                         sentence.append(actions[np.argmax(res)])
 
@@ -50,9 +52,9 @@ def gen_frames():
 
                 image = prob_viz(res, actions, image, colors)
 
-            cv2.rectangle(image, (0, 420), (640, 470), (245, 117, 16), -1)
-            cv2.putText(image, ' '.join(sentence), (0, 450),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.rectangle(image, (0, 420), (640, 470), (245, 117, 16), -1)
+            # cv2.putText(image, ' '.join(sentence), (0, 450),
+            #             cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             _, buffer = cv2.imencode('.jpg', image)
             frame = buffer.tobytes()

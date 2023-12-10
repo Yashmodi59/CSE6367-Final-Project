@@ -119,6 +119,7 @@ def open_video():
         output_sentence = ' '.join(sentence)
 
     return render_template('index.html', output="Click Go To Result Button once frame closed")
+
 @app.route('/result')
 def result():
     global output_sentence
